@@ -2,6 +2,6 @@ venv/
 
 .idea/
 
-.serverless/
-
 .DS_Store
+
+.env
