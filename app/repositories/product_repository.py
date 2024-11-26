@@ -25,6 +25,32 @@ def get_products_by_ids(
     return [product for product in products if product.id in ids]
 
 
+def get_products_by_categories(
+        categories: list[str],
+        product_ids_to_exclude: list[int],
+        order_by_popularity_score=False,
+        limit: int = None,
+) -> list[Product]:
+    products = get_products()
+    products = [
+        product
+        for product in products
+        if product.category in categories and product.id not in product_ids_to_exclude
+    ]
+
+    if order_by_popularity_score:
+        products = sorted(
+            products,
+            key=lambda product: product.popularity_score,
+            reverse=True
+        )
+
+    if limit:
+        return products[:limit]
+
+    return products
+
+
 def get_products_ordered_by_popularity_score(
         desc=True,
         limit: int = None,

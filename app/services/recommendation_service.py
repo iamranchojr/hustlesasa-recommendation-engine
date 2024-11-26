@@ -1,5 +1,3 @@
-import random
-
 from app.models import User, Product
 from app.repositories import product_repository, order_repository
 
@@ -25,11 +23,16 @@ def recommend_products(user: User = None) -> list[Product]:
 
         # extract product ids from order list and randomize them
         order_product_ids = list({item.product_id for order in recent_user_orders for item in order.items})
-        random.shuffle(order_product_ids)
+        order_product_categories = list({
+            product.category for product in product_repository.get_products_by_ids(list(order_product_ids))
+        })
 
-        # use the first 10 to get recommended products
-        return product_repository.get_products_by_ids(
-            ids=order_product_ids[:10],
+        # get similar products in order product categories ordered by popularity score
+        return product_repository.get_products_by_categories(
+            categories=order_product_categories,
+            product_ids_to_exclude=order_product_ids,
+            order_by_popularity_score=True,
+            limit=10
         )
 
     # recommend products based on their popularity
