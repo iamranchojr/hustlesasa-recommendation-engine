@@ -5,3 +5,7 @@ venv/
 .DS_Store
 
 .env
+
+app/__pycache__/
+
+app/tests/__pycache__/

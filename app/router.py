@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter
 
 from app.services import recommendation_service, user_service
 from app.models import Product

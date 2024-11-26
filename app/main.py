@@ -37,7 +37,7 @@ if settings.SECURE_SSL_REDIRECT:
 
 
 @app.get('/')
-async def root():
+async def index():
     return {
         'message': 'Welcome to Hustlesasa Recommendation Engine v1.0'
     }
